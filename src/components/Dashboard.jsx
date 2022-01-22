@@ -32,13 +32,13 @@ export default function Dashboard() {
       <Navbar />
       <div className="grid">
         <div className="row__one">
-          <Analytics />
-          <FAQ />
+          {/* <Analytics />
+          <FAQ /> */}
         </div>
         <div className="row__two">
-          <Earnings />
+          {/* <Earnings />
           <Transfers />
-          <Profile />
+          <Profile /> */}
         </div>
       </div>
     </Section>
