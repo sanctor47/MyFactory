@@ -5,13 +5,15 @@ import { IoStatsChart } from "react-icons/io5";
 import { BiGroup } from "react-icons/bi";
 import { FiActivity } from "react-icons/fi";
 import { cardStyles } from "./ReusableStyles";
+import LogDataService from "../services/analytics.service"
+
 export default function Analytics() {
   return (
     <Section>
       <div className="analytic ">
         <div className="content">
-          <h5>Spent this month</h5>
-          <h2>$682.5</h2>
+          <h5>Status</h5>
+          <h2>Active</h2>
         </div>
         <div className="logo">
           <BsFillCalendar2WeekFill />
@@ -22,8 +24,8 @@ export default function Analytics() {
           <IoStatsChart />
         </div>
         <div className="content">
-          <h5>Earnings</h5>
-          <h2>$350.40</h2>
+          <h5>Current Order</h5>
+          <h2>935209573</h2>
         </div>
       </div>
       <div className="analytic">
@@ -31,14 +33,14 @@ export default function Analytics() {
           <BiGroup />
         </div>
         <div className="content">
-          <h5>New clients</h5>
-          <h2>321</h2>
+          <h5>Operator</h5>
+          <h2>Aser Nabil</h2>
         </div>
       </div>
       <div className="analytic ">
         <div className="content">
-          <h5>Activity</h5>
-          <h2>$540.50</h2>
+          <h5>Active Temprature</h5>
+          <h2>200 deg</h2>
         </div>
         <div className="logo">
           <FiActivity />

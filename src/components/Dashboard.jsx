@@ -27,15 +27,7 @@ export default function Dashboard() {
     <Section>
       <Navbar />
       <div className="grid">
-        <div className="row__one">
-          <Analytics />
-          {/* <FAQ /> */}
-        </div>
-        <div className="row__two">
-          {/* <Earnings />
-          <Transfers />
-          <Profile /> */}
-        </div>
+        <Analytics />
       </div>
     </Section>
   );

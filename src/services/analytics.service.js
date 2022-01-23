@@ -10,13 +10,13 @@ import {
   doc,
 } from "firebase/firestore";
 
-const logCollectionRef = collection(db, "users");
+const logCollectionRef = collection(db, "machine/smartvac1");
 class LogDataService {
 
-  getAllUsers = () => {
-    return getDocs(userCollectionRef);
+  getAllLogs = () => {
+    return getDocs(logCollectionRef);
   };
 
 }
 
-export default new UserDataService();
+export default new LogDataService();
