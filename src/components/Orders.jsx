@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "./Navbar";
-import UserDataService from "../services/users.service";
-import { doc } from "firebase/firestore";
+import OrderDataService from "../services/orders.service";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
   const [id, setOrderId] = useState("");
-  const [, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
+  const [number, setNumber] = useState("");
+  const [tooling, setTooling] = useState("");
+  const [material, setMaterial] = useState("");
+  const [qty, setQty] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    getUsers();
+    getOrders();
   }, []);
 
   useEffect(() => {
@@ -26,18 +26,19 @@ function Orders() {
   const editHandler = async () => {
     setMessage("");
     try {
-      const docSnap = await UserDataService.getUser(id);
+      const docSnap = await OrderDataService.getOrder(id);
       console.log("the record is :", docSnap.data());
-      setName(docSnap.data().name);
-      setEmail(docSnap.data().email);
-      setRole(docSnap.data().role);
+      setNumber(docSnap.data().number);
+      setTooling(docSnap.data().tooling);
+      setMaterial(docSnap.data().material);
+      setQty(docSnap.data().qty);
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
   };
 
-  const getUsers = async () => {
-    const data = await UserDataService.getAllUsers();
+  const getOrders = async () => {
+    const data = await OrderDataService.getAllOrders();
     console.log(data.docs);
     setOrders(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
@@ -45,72 +46,78 @@ function Orders() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    if (name === "" || email === "") {
+    if (number === "" || tooling === "" || material === ""|| qty === "") {
       setMessage({ error: true, msg: "All fields are mandatory!" });
       return;
     }
-    const newUser = {
-      name,
-      email,
-      role,
+    const newOrder = {
+      number,
+      tooling,
+      material,
+      qty
     };
-    console.log(newUser);
+    console.log(newOrder);
 
     try {
       if (id !== undefined && id !== "") {
-        await UserDataService.updateUser(id, newUser);
-        setUserId("");
+        await OrderDataService.updateOrder(id, newOrder);
+        setOrderId("");
         setMessage({ error: false, msg: "Updated successfully!" });
       } else {
-        await UserDataService.addUsers(newUser);
-        setMessage({ error: false, msg: "New User added successfully!" });
+        await OrderDataService.addOrders(newOrder);
+        setMessage({ error: false, msg: "New Order added successfully!" });
       }
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
 
-    setName("");
-    setEmail("");
-    setRole("");
-    getUsers();
+    setNumber("");
+    setTooling("");
+    setMaterial("");
+    setQty("");
+    getOrders();
   };
 
   const deleteHandler = async (id) => {
-    await UserDataService.deleteUser(id);
-    getUsers();
+    await OrderDataService.deleteOrder(id);
+    getOrders();
   };
 
   return (
     <Section>
       <Navbar />
       <Form onSubmit={handleSubmit}>
-        <h1>Add User`</h1>
-        <span>Name</span>
-        <input type="text" onChange={(e) => setName(e.target.value)} />
-        <span>Email</span>
-        <input type="email" onChange={(e) => setEmail(e.target.value)} />
-        <span>Role</span>
-        <input type="text" onChange={(e) => setRole(e.target.value)} />
-        <button type="submit">Add User</button>
+        <h1>New Order</h1>
+        <span>Number</span>
+        <input type="text" onChange={(e) => setNumber(e.target.value)} />
+        <span>Tooling</span>
+        <input type="text" onChange={(e) => setTooling(e.target.value)} />
+        <span>Material</span>
+        <input type="text" onChange={(e) => setMaterial(e.target.value)} />
+        <span>Qty</span>
+        <input type="text" onChange={(e) => setQty(e.target.value)} />
+        <button type="submit">Add Order</button>
       </Form>
       <Table>
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th>M/O</th>
+            <th>Tooling</th>
+            <th>Material</th>
+            <th>Qty</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((doc, index) => {
+          {orders.map((doc, index) => {
             return (
               <tr key={doc.id}>
                 <td>{index + 1}</td>
-                <td>{doc.name}</td>
-                <td>{doc.email}</td>
-                <td>{doc.role}</td>
+                <td>{doc.number}</td>
+                <td>{doc.tooling}</td>
+                <td>{doc.material}</td>
+                <td>{doc.qty}</td>
                 <td>
                   <button onClick={(e) => deleteHandler(doc.id)}>Delete</button>
                 </td>
@@ -134,6 +141,9 @@ const Form = styled.form`
   color: white;
   display: flex;
   flex-direction: column;
+  button{
+      margin: 10px;
+  }
 `;
 
 const Table = styled.table`
@@ -142,4 +152,4 @@ const Table = styled.table`
   width: 100%;
   
 `;
-export default Users;
+export default Orders;

@@ -100,7 +100,7 @@ export default function Sidebar() {
               >
                 <a href="#">
                   <BsCardList />
-                  <span> Orders</span>
+                  <Link to="/orders"><span> Orders</span></Link>
                 </a>
               </li>
               <li

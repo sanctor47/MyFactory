@@ -13,12 +13,12 @@ import {
 const orderCollectionRef = collection(db, "orders");
 class OrderDataService {
   addOrders = (newOrder) => {
-    return addDoc(orderCollectionRef, newUser);
+    return addDoc(orderCollectionRef, newOrder);
   };
 
-  updateOrder = (id, updatedUser) => {
+  updateOrder = (id, updatedOrder) => {
     const orderDoc = doc(db, "orders", id);
-    return updateDoc(orderDoc, updatedUser);
+    return updateDoc(orderDoc, updatedOrder);
   };
 
   deleteOrder = (id) => {
